@@ -11,7 +11,7 @@ class C_comptable extends CI_Controller {
 	 * le comportement habituel de la fonction index. Grâce à _remap, on dispose
 	 * d'une fonction unique capable d'accepter un nombre variable de paramètres.
 	 *
-	 * @param $action : l'action demandée par le visiteur
+	 * @param $action : l'action demandée par le comptable
 	 * @param $params : les éventuels paramètres transmis pour la réalisation de cette action
 	*/
 	public function _remap($action, $params = array())
@@ -19,10 +19,10 @@ class C_comptable extends CI_Controller {
 		// chargement du modèle d'authentification
 		$this->load->model('authentif');
 		
-		// contrôle de la bonne authentification de l'visiteur
+		// contrôle de la bonne authentification de le comptable
 		if (!$this->authentif->estConnecte()) 
 		{
-			// l'visiteur n'est pas authentifié, on envoie la vue de connexion
+			// le comptable n'est pas authentifié, on envoie la vue de connexion
 			$data = array();
 			$this->templates->load('t_connexion', 'v_connexion', $data);
 		}
@@ -31,7 +31,7 @@ class C_comptable extends CI_Controller {
 			// Aiguillage selon l'action demandée 
 			// CI a traité l'URL au préalable de sorte à toujours renvoyer l'action "index"
 			// même lorsqu'aucune action n'est exprimée
-			if ($action == 'index')				// index demandé : on active la fonction accueil du modèle visiteur
+			if ($action == 'index')				// index demandé : on active la fonction accueil du modèle le comptable
 			{
 				$this->load->model('a_comptable');
 
@@ -114,10 +114,10 @@ class C_comptable extends CI_Controller {
 				// obtention des données postées
 				$lesFrais = $this->input->post('lesFrais');
 
-				$this->a_visiteur->majForfait($idComptable, $mois, $lesFrais);
+				$this->a_comptable->majForfait($idComptable, $mois, $lesFrais);
 
 				// ... et on revient en modification de la fiche
-				$this->a_visiteur->modFiche($idComptable, $mois, 'Modification(s) des éléments forfaitisés enregistrée(s) ...');
+				$this->a_comptable->modFiche($idComptable, $mois, 'Modification(s) des éléments forfaitisés enregistrée(s) ...');
 			}
 			elseif ($action == 'ajouteFrais') // ajouteLigneFrais demandé : on active la fonction ajouteLigneFrais du modèle visiteur ...
 			{	// TODO : conrôler que l'obtention des données postées ne rend pas d'erreurs
@@ -148,7 +148,7 @@ class C_comptable extends CI_Controller {
 				$this->load->model('a_comptable');
 
 				// obtention de l'id du visiteur et du mois concerné
-				$idVisiteur = $this->session->userdata('idUser');
+				$idComptable = $this->session->userdata('idUser');
 				$mois = $this->session->userdata('mois');
 				
 				// Quel est l'id de la ligne à supprimer : doit avoir été transmis en second paramètre
