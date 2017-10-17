@@ -42,8 +42,11 @@ $v_path = base_url('application/views');
 						<?php echo anchor('c_comptable/', 'Accueil', 'title="Page d\'accueil"'); ?>
 					<br/></li>
 					<li class="smenu">
-						<?php echo anchor('c_comptable/mesFiches', 'Mes fiches de frais', 'title="Consultation de mes fiches de frais"'); ?>
-					</li>
+						<?php echo anchor('c_comptable/mesFiches', 'Valider fiche de frais', 'title="Consultation de mes fiches de frais"'); ?>
+					<br/></li>
+					<li class="smenu">
+						<?php echo anchor('c_comptable/deconnecter', 'Suivre paiement fiche de frais', 'title="Déconnexion"'); ?>
+					<br/></li>
 					<li class="smenu">
 						<?php echo anchor('c_comptable/deconnecter', 'Se déconnecter', 'title="Déconnexion"'); ?>
 					<br/></li>
@@ -54,13 +57,11 @@ $v_path = base_url('application/views');
 			<?php echo $body; ?>
 
 			<div id="pied">
-			<p>
-    			<a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a>
- 			</p>
- 			 
- 			<p>
-				<a href="http://jigsaw.w3.org/css-validator/check/referer"> <img style="border:0;width:88px;height:31px"src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="CSS Valide !" /></a>
-			</p>
+			
+    			 <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" />
+ 			
+				 <img style="border:0;width:88px;height:31px"src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="CSS Valide !" />
+			
 			</div>
 
 		</div>    

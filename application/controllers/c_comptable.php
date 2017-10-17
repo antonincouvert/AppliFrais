@@ -40,7 +40,7 @@ class C_comptable extends CI_Controller {
 
 				$this->a_comptable->accueil();
 			}
-			elseif ($action == 'mesFiches')		// mesFiches demandé : on active la fonction mesFiches du modèle visiteur
+			elseif ($action == 'mesFiches')		// mesFiches demandé : on active la fonction mesFiches du modèle comptable
 			{
 				$this->load->model('a_comptable');
 
