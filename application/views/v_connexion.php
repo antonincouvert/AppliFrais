@@ -4,7 +4,7 @@
 ?>
 
 <div id="contenu">
-	<h2>Identification utilisateur</h2>
+	<h2>Identification visiteur</h2>
 
 	<?php if (isset($erreur))	echo '<div class ="erreur"><ul><li>'.$erreur.'</li></ul></div>'; ?>
 

@@ -58,7 +58,7 @@ class Authentif extends CI_Model {
 	/**
 	 * Vérifie en base de données si les informations de connexions sont correctes
 	 * 
-	 * @return : renvoie l'id, le nom et le prenom de l'utilisateur dans un tableau s'il est reconnu, sinon un tableau vide.
+	 * @return : renvoie l'id, le nom et le prenom de l'visiteur dans un tableau s'il est reconnu, sinon un tableau vide.
 	 */
 	public function authentifier ($login, $mdp) 
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session

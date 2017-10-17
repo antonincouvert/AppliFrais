@@ -24,15 +24,16 @@ class C_default extends CI_Controller {
 			$data = array();
 			$this->templates->load('t_connexion', 'v_connexion', $data);
 		}
-		else
+		else 
 		{
 			$this->load->helper('url');
 			redirect('/c_visiteur/');
 		}
+
 	}
 	
 	/**
-	 * Traite le retour du formulaire de connexion afin de connecter l'utilisateur
+	 * Traite le retour du formulaire de connexion afin de connecter l'visiteur
 	 * s'il est reconnu
 	*/
 	public function connecter () 

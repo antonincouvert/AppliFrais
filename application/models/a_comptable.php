@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class A_visiteur extends CI_Model {
+class A_comptable extends CI_Model {
 
     function __construct()
     {
@@ -27,14 +27,14 @@ class A_visiteur extends CI_Model {
 		$lesMois = $this->functionsLib->getSixDerniersMois();
 		
 		// obtention de l'id de l'visiteur mémorisé en session
-		$idVisiteur = $this->session->userdata('idUser');
+		$idComptable = $this->session->userdata('idUser');
 		
 		// contrôle de l'existence des 6 dernières fiches et création si nécessaire
 		foreach ($lesMois as $unMois){
-			if(!$this->dataAccess->ExisteFiche($idVisiteur, $unMois)) $this->dataAccess->creeFiche($idVisiteur, $unMois);
+			if(!$this->dataAccess->ExisteFiche($idComptable, $unMois)) $this->dataAccess->creeFiche($idComptable, $unMois);
 		}
 		// envoie de la vue accueil du visiteur
-		$this->templates->load('t_visiteur', 'v_visAccueil');
+		$this->templates->load('t_comptable', 'v_visAccueil');
 	}
 	
 	/**
@@ -44,14 +44,14 @@ class A_visiteur extends CI_Model {
 	 * @param $idVisiteur : l'id du visiteur 
 	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
 	*/
-	public function mesFiches ($idVisiteur, $message=null)
+	public function mesFiches ($idComptable, $message=null)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 	
-		$idVisiteur = $this->session->userdata('idUser');
+		$idComptable = $this->session->userdata('idUser');
 
 		$data['notify'] = $message;
-		$data['mesFiches'] = $this->dataAccess->getFiches($idVisiteur);		
-		$this->templates->load('t_visiteur', 'v_visMesFiches', $data);	
+		$data['mesFiches'] = $this->dataAccess->getFiches($idComptable);		
+		$this->templates->load('t_comptable', 'v_visMesFiches', $data);	
 	}	
 
 	/**
@@ -60,15 +60,15 @@ class A_visiteur extends CI_Model {
 	 * @param $idVisiteur : l'id du visiteur 
 	 * @param $mois : le mois de la fiche à modifier 
 	*/
-	public function voirFiche($idVisiteur, $mois)
+	public function voirFiche($idComptable, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 
 		$data['numAnnee'] = substr( $mois,0,4);
 		$data['numMois'] = substr( $mois,4,2);
-		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idVisiteur,$mois);
-		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idVisiteur,$mois);		
+		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idComptable,$mois);
+		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idComptable,$mois);		
 
-		$this->templates->load('t_visiteur', 'v_visVoirListeFrais', $data);
+		$this->templates->load('t_comptable', 'v_visVoirListeFrais', $data);
 	}
 
 	/**
@@ -79,16 +79,16 @@ class A_visiteur extends CI_Model {
 	 * @param $mois : le mois de la fiche à modifier 
 	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
 	*/
-	public function modFiche($idVisiteur, $mois, $message=null)
+	public function modFiche($idComptable, $mois, $message=null)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 
 		$data['notify'] = $message;
 		$data['numAnnee'] = substr( $mois,0,4);
 		$data['numMois'] = substr( $mois,4,2);
-		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idVisiteur,$mois);
-		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idVisiteur,$mois);		
+		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idComptable,$mois);
+		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idComptable,$mois);		
 
-		$this->templates->load('t_visiteur', 'v_visModListeFrais', $data);
+		$this->templates->load('t_comptable', 'v_visModListeFrais', $data);
 	}
 
 	/**
@@ -97,11 +97,11 @@ class A_visiteur extends CI_Model {
 	 * @param $idVisiteur : l'id du visiteur 
 	 * @param $mois : le mois de la fiche à signer
 	*/
-	public function signeFiche($idVisiteur, $mois)
+	public function signeFiche($idComptable, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		// TODO : intégrer une fonctionnalité d'impression PDF de la fiche
 
-	    $this->dataAccess->signeFiche($idVisiteur, $mois);
+	    $this->dataAccess->signeFiche($idComptable, $mois);
 	}
 
 	/**
@@ -111,12 +111,12 @@ class A_visiteur extends CI_Model {
 	 * @param $mois : le mois de la fiche concernée
 	 * @param $lesFrais : les quantités liées à chaque type de frais, sous la forme d'un tableau
 	*/
-	public function majForfait($idVisiteur, $mois, $lesFrais)
+	public function majForfait($idComptable, $mois, $lesFrais)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		// TODO : valider les données contenues dans $lesFrais ...
 		
-		$this->dataAccess->majLignesForfait($idVisiteur,$mois,$lesFrais);
-		$this->dataAccess->recalculeMontantFiche($idVisiteur,$mois);
+		$this->dataAccess->majLignesForfait($idComptable,$mois,$lesFrais);
+		$this->dataAccess->recalculeMontantFiche($idComptable,$mois);
 	}
 
 	/**
@@ -126,7 +126,7 @@ class A_visiteur extends CI_Model {
 	 * @param $mois : le mois de la fiche concernée
 	 * @param $lesFrais : les quantités liées à chaque type de frais, sous la forme d'un tableau
 	*/
-	public function ajouteFrais($idVisiteur, $mois, $uneLigne)
+	public function ajouteFrais($idComptable, $mois, $uneLigne)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		// TODO : valider la donnée contenues dans $uneLigne ...
 
@@ -134,7 +134,7 @@ class A_visiteur extends CI_Model {
 		$libelle = $uneLigne['libelle'];
 		$montant = $uneLigne['montant'];
 
-		$this->dataAccess->creeLigneHorsForfait($idVisiteur,$mois,$libelle,$dateFrais,$montant);
+		$this->dataAccess->creeLigneHorsForfait($idComptable,$mois,$libelle,$dateFrais,$montant);
 	}
 
 	/**
@@ -144,7 +144,7 @@ class A_visiteur extends CI_Model {
 	 * @param $mois : le mois de la fiche concernée
 	 * @param $idLigneFrais : l'id de la ligne à supprimer
 	*/
-	public function supprLigneFrais($idVisiteur, $mois, $idLigneFrais)
+	public function supprLigneFrais($idComptable, $mois, $idLigneFrais)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session et cohérents entre eux
 
 	    $this->dataAccess->supprimerLigneHorsForfait($idLigneFrais);

@@ -19,10 +19,10 @@ class C_visiteur extends CI_Controller {
 		// chargement du modèle d'authentification
 		$this->load->model('authentif');
 		
-		// contrôle de la bonne authentification de l'utilisateur
+		// contrôle de la bonne authentification de l'visiteur
 		if (!$this->authentif->estConnecte()) 
 		{
-			// l'utilisateur n'est pas authentifié, on envoie la vue de connexion
+			// l'visiteur n'est pas authentifié, on envoie la vue de connexion
 			$data = array();
 			$this->templates->load('t_connexion', 'v_connexion', $data);
 		}
@@ -66,7 +66,7 @@ class C_visiteur extends CI_Controller {
 				// mémorisation du mode modification en cours 
 				// on mémorise le mois de la fiche en cours de modification
 				$this->session->set_userdata('mois', $mois);
-				// obtention de l'id utilisateur courant
+				// obtention de l'id visiteur courant
 				$idVisiteur = $this->session->userdata('idUser');
 
 				$this->a_visiteur->voirFiche($idVisiteur, $mois);
@@ -82,7 +82,7 @@ class C_visiteur extends CI_Controller {
 				// mémorisation du mode modification en cours 
 				// on mémorise le mois de la fiche en cours de modification
 				$this->session->set_userdata('mois', $mois);
-				// obtention de l'id utilisateur courant
+				// obtention de l'id visiteur courant
 				$idVisiteur = $this->session->userdata('idUser');
 
 				$this->a_visiteur->modFiche($idVisiteur, $mois);
@@ -94,7 +94,7 @@ class C_visiteur extends CI_Controller {
 				// obtention du mois de la fiche à signer qui doit avoir été transmis
 				// en second paramètre
 				$mois = $params[0];
-				// obtention de l'id utilisateur courant et du mois concerné
+				// obtention de l'id visiteur courant et du mois concerné
 				$idVisiteur = $this->session->userdata('idUser');
 				$this->a_visiteur->signeFiche($idVisiteur, $mois);
 
