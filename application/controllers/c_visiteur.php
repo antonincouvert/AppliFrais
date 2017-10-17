@@ -40,7 +40,7 @@ class C_visiteur extends CI_Controller {
 
 				$this->a_visiteur->accueil();
 			}
-			elseif ($action == 'mesFiches')		// mesFiches demandé : on active la fonction mesFiches du modèle visiteur
+			else if ($action == 'mesFiches')		// mesFiches demandé : on active la fonction mesFiches du modèle visiteur
 			{
 				$this->load->model('a_visiteur');
 

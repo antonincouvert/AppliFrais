@@ -43,8 +43,7 @@ class DataAccess extends CI_Model {
 
 		$req = "select * 
 				from lignefraishorsforfait 
-				where lignefraishorsforfait.idvisiteur ='$idVisiteur' 
-					and lignefraishorsforfait.mois = '$mois' ";	
+				where lignefraishorsforfait.idvisiteur ='$idVisiteur' and lignefraishorsforfait.mois = '$mois' ";	
 		$rs = $this->db->query($req);
 		$lesLignes = $rs->result_array();
 		$nbLignes = $rs->num_rows();
