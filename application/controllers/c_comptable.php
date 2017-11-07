@@ -87,6 +87,38 @@ class C_comptable extends CI_Controller {
 
 				$this->a_comptable->modFiche($idComptable, $mois);
 			}
+			elseif ($action == 'ValiderFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
+			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
+				
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche à modifier qui doit avoir été transmis
+				// en second paramètre
+				$mois = $params[0];
+				// mémorisation du mode modification en cours
+				// on mémorise le mois de la fiche en cours de modification
+				$this->session->set_userdata('mois', $mois);
+				// obtention de l'id visiteur courant
+				$idComptable = $this->session->userdata('idUser');
+				
+				$this->a_comptable->ValiderFiche($idComptable, $mois);
+			}
+			elseif ($action == 'RefuserFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
+			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
+				
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche à modifier qui doit avoir été transmis
+				// en second paramètre
+				$mois = $params[0];
+				// mémorisation du mode modification en cours
+				// on mémorise le mois de la fiche en cours de modification
+				$this->session->set_userdata('mois', $mois);
+				// obtention de l'id visiteur courant
+				$idComptable = $this->session->userdata('idUser');
+				
+				$this->a_comptable->RefuserFiche($idComptable, $mois);
+			}
 			elseif ($action == 'signeFiche') 	// signeFiche demandé : on active la fonction signeFiche du modèle visiteur ...
 			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
 				$this->load->model('a_comptable');
