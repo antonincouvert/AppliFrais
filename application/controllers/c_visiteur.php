@@ -26,7 +26,13 @@ class C_visiteur extends CI_Controller {
 			$data = array();
 			$this->templates->load('t_connexion', 'v_connexion', $data);
 		}
-		else
+		else if ( $this->session->userdata('statut') != 'visiteur')
+		{
+			$this->load->helper('url');
+			redirect('/c_default/');
+		}
+		
+		else 
 		{
 			// Aiguillage selon l'action demandée 
 			// CI a traité l'URL au préalable de sorte à toujours renvoyer l'action "index"

@@ -24,12 +24,12 @@ class C_default extends CI_Controller {
 			$data = array();
 			$this->templates->load('t_connexion', 'v_connexion', $data);
 		}
-		else if ($statut == 'visiteur')
+		else if ($statut == 'visiteur' || $this->session->userdata('statut') == 'visiteur')
 		{
 			$this->load->helper('url');
 			redirect('/c_visiteur/');
 		}
-		else if ($statut == 'comptable')
+		else if ($statut == 'comptable' || $this->session->userdata('statut') == 'comptable')
 		{
 			$this->load->helper('url');
 			redirect('/c_comptable/');
