@@ -79,17 +79,12 @@ class A_comptable extends CI_Model {
 	 * @param $mois : le mois de la fiche à modifier 
 	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
 	*/
-	public function modFiche($idComptable, $mois, $message=null)
+	public function ValiderFiche($idComptable, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
-
-		$data['notify'] = $message;
-		$data['numAnnee'] = substr( $mois,0,4);
-		$data['numMois'] = substr( $mois,4,2);
-		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idComptable,$mois);
-		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idComptable,$mois);		
-
-		$this->templates->load('t_comptable', 'v_visModListeFrais', $data);
+		
+		$this->dataAccess->ValiderFiche($idComptable, $mois);
 	}
+	
 
 	/**
 	 * Signe une fiche de frais en changeant son état
