@@ -60,13 +60,13 @@ class A_comptable extends CI_Model {
 	 * @param $mois : le mois de la fiche à modifier 
 	*/
 	
-	public function voirFiche($idComptable, $mois)
+	public function voirFiche($idVisiteur, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 
 		$data['numAnnee'] = substr( $mois,0,4);
 		$data['numMois'] = substr( $mois,4,2);
-		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idComptable,$mois);
-		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idComptable,$mois);		
+		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idVisiteur,$mois);
+		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idVisiteur,$mois);		
 
 		$this->templates->load('t_comptable', 'v_visVoirListeFrais', $data);
 	}
