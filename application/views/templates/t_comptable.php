@@ -42,7 +42,7 @@ $v_path = base_url('application/views');
 						<?php echo anchor('c_comptable/', 'Accueil', 'title="Page d\'accueil"'); ?>
 					<br/></li>
 					<li class="smenu">
-						<?php echo anchor('c_comptable/mesFiches', 'Valider fiche de frais', 'title="Consultation de mes fiches de frais"'); ?>
+						<?php echo anchor('c_comptable/listeFiches', 'Valider fiche de frais', 'title="Consultation de mes fiches de frais"'); ?>
 					<br/></li>
 					<li class="smenu">
 						<?php echo anchor('c_comptable/deconnecter', 'Suivre paiement fiche de frais', 'title="Déconnexion"'); ?>

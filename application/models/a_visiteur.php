@@ -50,7 +50,7 @@ class A_visiteur extends CI_Model {
 		$idVisiteur = $this->session->userdata('idUser');
 
 		$data['notify'] = $message;
-		$data['mesFiches'] = $this->dataAccess->getFiches($idVisiteur);		
+		$data['mesFiches'] = $this->dataAccess->getFichesVisiteurs($idVisiteur);		
 		$this->templates->load('t_visiteur', 'v_visMesFiches', $data);	
 	}	
 

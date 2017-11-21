@@ -44,13 +44,12 @@ class A_comptable extends CI_Model {
 	 * @param $idVisiteur : l'id du visiteur 
 	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
 	*/
-	public function mesFiches ($idComptable, $message=null)
+	public function listeFiches ($message=null)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
-	
-		$idComptable = $this->session->userdata('idUser');
+
 
 		$data['notify'] = $message;
-		$data['mesFiches'] = $this->dataAccess->getFiches($idComptable);		
+		$data['listeFiches'] = $this->dataAccess->getFiches();		
 		$this->templates->load('t_comptable', 'v_visValidationFiches', $data);	
 	}	
 
@@ -60,6 +59,7 @@ class A_comptable extends CI_Model {
 	 * @param $idVisiteur : l'id du visiteur 
 	 * @param $mois : le mois de la fiche à modifier 
 	*/
+	
 	public function voirFiche($idComptable, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 
