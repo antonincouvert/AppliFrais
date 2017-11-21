@@ -70,11 +70,11 @@ class C_comptable extends CI_Controller {
 				// en second paramètre
 				$mois = $params[0];
 				// mémorisation du mode modification en cours 
+				$idVisiteur = $params[1];
 				// on mémorise le mois de la fiche en cours de modification
 				$this->session->set_userdata('mois', $mois);
 				// obtention de l'id visiteur courant
-				$idVisiteur = $this->session->userdata('idUser');
-
+				
 				$this->a_comptable->voirFiche($idVisiteur, $mois);
 			}
 			elseif ($action == 'modFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif

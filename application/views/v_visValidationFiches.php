@@ -32,7 +32,7 @@ $this->load->helper('url');
 				echo 
 				'<tr>
 					<td class="libelle">'.$uneFiche['nom'].'</td>
-					<td class="date">'.anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/g', $uneFiche['mois'], 'title="Consulter la fiche"').'</td>
+					<td class="date">'.anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], $uneFiche['mois'], 'title="Consulter la fiche"').'</td>
 					<td class="montant">'.$uneFiche['montantValide'].'</td>
 					<td class="date">'.$uneFiche['dateModif'].'</td>
 					<td class="action">'.$ValiderLink.'</td>

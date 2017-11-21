@@ -51,7 +51,7 @@ class A_comptable extends CI_Model {
 		$data['notify'] = $message;
 		$data['listeFiches'] = $this->dataAccess->getFiches();		
 		$this->templates->load('t_comptable', 'v_visValidationFiches', $data);	
-	}	
+	}
 
 	/**
 	 * Présente le détail de la fiche sélectionnée 
