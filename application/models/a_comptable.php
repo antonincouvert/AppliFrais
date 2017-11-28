@@ -50,7 +50,7 @@ class A_comptable extends CI_Model {
 
 		$data['notify'] = $message;
 		$data['listeFiches'] = $this->dataAccess->getFiches();		
-		$this->templates->load('t_comptable', 'v_visValidationFiches', $data);	
+		$this->templates->load('t_comptable', 'v_cptMesFiches', $data);	
 	}
 
 	/**
@@ -79,25 +79,20 @@ class A_comptable extends CI_Model {
 	 * @param $mois : le mois de la fiche à modifier 
 	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
 	*/
-	public function ValiderFiche($idComptable, $mois)
+	/*public function ValiderFiche($idComptable, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		
 		$this->dataAccess->ValiderFiche($idComptable, $mois);
-	}
+	}*/
 	
-
-	/**
-	 * Signe une fiche de frais en changeant son état
-	 * 
-	 * @param $idVisiteur : l'id du visiteur 
-	 * @param $mois : le mois de la fiche à signer
-	*/
-	public function signeFiche($idComptable, $mois)
+	public function ValiderFiche($idComptable, $mois, $message = NULL)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
-		// TODO : intégrer une fonctionnalité d'impression PDF de la fiche
-
-	    $this->dataAccess->signeFiche($idComptable, $mois);
+		
+		$data['notify']= $message;
+		$data['ValiderFiche'] = $this->dataAccess->getFiches();
+		$this->templates->load('t_comptable', 'v_cptMesFiches', $data);
 	}
+
 
 	/**
 	 * Modifie les quantités associées aux frais forfaitisés dans une fiche donnée

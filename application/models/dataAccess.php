@@ -206,9 +206,25 @@ class DataAccess extends CI_Model {
 		//met à 'CL' son champs idEtat
 		$laFiche = $this->getLesInfosFicheFrais($idComptable,$mois);
 		if($laFiche['idEtat']=='CL'){
-			$this->majEtatFicheFrais($idComptable, $mois,'VA');
+				$this->majEtatFicheFrais($idComptable, $mois,'VA');
 		}
 	}
+	
+	/**
+	 * Valide une fiche de frais en modifiant son état de "CR" à "CL"
+	 * Ne fait rien si l'état initial n'est pas "CR"
+	 *
+	 * @param $idVisiteur
+	 * @param $mois sous la forme aaaamm
+	 */
+	public function RefuserFiche($idComptable,$mois){
+		//met à 'CL' son champs idEtat
+		$laFiche = $this->getLesInfosFicheFrais($idComptable,$mois);
+		if($laFiche['idEtat']=='CL'){
+			$this->majEtatFicheFrais($idComptable, $mois,'RF');
+		}
+	}
+	
 
 	/**
 	 * Crée un nouveau frais hors forfait pour un visiteur un mois donné
@@ -318,6 +334,7 @@ class DataAccess extends CI_Model {
 		$req = "select nom, idVisiteur, E.id, mois, montantValide, dateModif, 
 		libelle from fichefrais F, utilisateur U, Etat E where F.idVisiteur = U.id 
 		and F.idEtat = E.id
+    	and F.idEtat ='CL'
 		order by mois desc";
 		$rs = $this->db->query($req);
 		$lesFiches = $rs->result_array();

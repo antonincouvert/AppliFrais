@@ -1,5 +1,5 @@
 <?php
-$this->load->helper('url');
+	$this->load->helper('url');
 ?>
 <div id="contenu">
 	<h2>Liste de mes fiches de frais</h2>
@@ -16,19 +16,18 @@ $this->load->helper('url');
 				<th  colspan="4">Actions</th>              
 			</tr>
 		</thead>
-		<tbody>
+	<tbody>
           
 		<?php    
-		foreach( $listeFiches as $uneFiche) 
+			foreach( $listeFiches as $uneFiche) 
 			{
-				$ValiderFiche = '';
-				$RefuserFiche = '';
-				
-			if ($uneFiche['id'] == 'CL') 
-			{
-				$ValiderFiche = anchor('c_comptable/ValiderFiche/'.$uneFiche['mois'], 'Valider',  'title="Valider la fiche"  onclick="return confirm(\'Voulez-vous vraiment Valider cette fiche ?\');"');
-				$RefuserFiche = anchor('c_comptable/RefuserFiche/'.$uneFiche['mois'], 'Refuser',  'title="Refuser la fiche"  onclick="return confirm(\'Voulez-vous vraiment Refuser cette fiche ?\');"');
-			}	
+				$ValiderFiche= '';
+				$RefuserFiche= '';
+
+				if ($uneFiche['id'] == 'CL') {
+					$ValiderFiche= anchor('c_comptable/ValiderFiche/'.$uneFiche['mois'], 'Valider',  'title="Valider la fiche"');
+					$RefuserFiche= anchor('c_comptable/RefuserFiche/'.$uneFiche['mois'], 'Refuser',  'title="Refuser la fiche"  onclick="return confirm(\'Voulez-vous vraiment signer cette fiche ?\');"');
+				}
 				
 				echo 
 				'<tr>
