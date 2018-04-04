@@ -56,6 +56,15 @@ class C_comptable extends CI_Controller {
 
 				$this->a_comptable->listeFiches();
 			}
+			elseif ($action == 'suiviFiches')		// listesFiches demandé : on active la fonction listesFiches du modèle comptable
+			{
+				$this->load->model('a_comptable');
+				
+				// on n'est pas en mode "modification d'une fiche"
+				$this->session->unset_userdata('mois');
+				
+				$this->a_comptable->suiviFiches();
+			}
 			elseif ($action == 'deconnecter')	// deconnecter demandé : on active la fonction deconnecter du modèle authentif
 			{
 				$this->load->model('authentif');
@@ -93,6 +102,23 @@ class C_comptable extends CI_Controller {
 
 				$this->a_comptable->modFiche($idComptable, $mois);
 			}
+			elseif ($action == 'listeFiches')		// modFiche demandé : on active la fonction modFiche du modèle authentif
+			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
+				
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche à modifier qui doit avoir été transmis
+				// en second paramètre
+				//$idVisiteur = $params[0];
+				//$mois = $params[1];
+				// mémorisation du mode modification en cours
+				// on mémorise le mois de la fiche en cours de modification
+				//$this->session->set_userdata('mois', $mois);
+				// obtention de l'id visiteur courant
+				$idComptable = $this->session->userdata('idUser');
+				
+				$this->a_comptable->listeFiches($idVisiteur, $mois);
+			}
 			elseif ($action == 'ValiderFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
 			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
 				
@@ -100,14 +126,15 @@ class C_comptable extends CI_Controller {
 				
 				// obtention du mois de la fiche à modifier qui doit avoir été transmis
 				// en second paramètre
-				$mois = $params[0];
+				$idVisiteur = $params[0];
+				$mois = $params[1];
 				// mémorisation du mode modification en cours
 				// on mémorise le mois de la fiche en cours de modification
-				$this->session->set_userdata('mois', $mois);
+				//$this->session->set_userdata('mois', $mois);
 				// obtention de l'id visiteur courant
 				$idComptable = $this->session->userdata('idUser');
 				
-				$this->a_comptable->ValiderFiche($idComptable, $mois);
+				$this->a_comptable->ValiderFiche($idVisiteur, $mois);
 			}
 			elseif ($action == 'RefuserFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
 			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
@@ -116,14 +143,66 @@ class C_comptable extends CI_Controller {
 				
 				// obtention du mois de la fiche à modifier qui doit avoir été transmis
 				// en second paramètre
-				$mois = $params[0];
+				$idVisiteur = $params[0];
+				$mois = $params[1];
 				// mémorisation du mode modification en cours
 				// on mémorise le mois de la fiche en cours de modification
-				$this->session->set_userdata('mois', $mois);
+				//$this->session->set_userdata('mois', $mois);
 				// obtention de l'id visiteur courant
 				$idComptable = $this->session->userdata('idUser');
 				
-				$this->a_comptable->RefuserFiche($idComptable, $mois);
+				$this->a_comptable->RefuserFiche($idVisiteur, $mois);
+			}
+			elseif ($action == 'suiviFiches')		// modFiche demandé : on active la fonction modFiche du modèle authentif
+			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
+				
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche à modifier qui doit avoir été transmis
+				// en second paramètre
+				//$idVisiteur = $params[0];
+				//$mois = $params[1];
+				// mémorisation du mode modification en cours
+				// on mémorise le mois de la fiche en cours de modification
+				//$this->session->set_userdata('mois', $mois);
+				// obtention de l'id visiteur courant
+				$idComptable = $this->session->userdata('idUser');
+				
+				$this->a_comptable->suiviFiches($idVisiteur, $mois);
+			}
+			elseif ($action == 'MisePaiementFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
+			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
+				
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche à modifier qui doit avoir été transmis
+				// en second paramètre
+				$idVisiteur = $params[0];
+				$mois = $params[1];
+				// mémorisation du mode modification en cours
+				// on mémorise le mois de la fiche en cours de modification
+				//$this->session->set_userdata('mois', $mois);
+				// obtention de l'id visiteur courant
+				$idComptable = $this->session->userdata('idUser');
+				
+				$this->a_comptable->MisePaiementFiche($idVisiteur, $mois);
+			}
+			elseif ($action == 'RembourserFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
+			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
+				
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche à modifier qui doit avoir été transmis
+				// en second paramètre
+				$idVisiteur = $params[0];
+				$mois = $params[1];
+				// mémorisation du mode modification en cours
+				// on mémorise le mois de la fiche en cours de modification
+				//$this->session->set_userdata('mois', $mois);
+				// obtention de l'id visiteur courant
+				$idComptable = $this->session->userdata('idUser');
+				
+				$this->a_comptable->RembourserFiche($idVisiteur, $mois);
 			}
 			else								// dans tous les autres cas, on envoie la vue par défaut pour l'erreur 404
 			{

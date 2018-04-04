@@ -9,6 +9,25 @@
 	  
 		<fieldset>
 			<legend>Eléments forfaitisés</legend>
+			<legend>Quantite</legend>
+			<?php
+				foreach ($lesFraisForfait as $unFrais)
+				{
+					$idFrais = $unFrais['idfrais'];
+					$libelle = $unFrais['libelle'];
+					$quantite = $unFrais['quantite'];
+
+					echo 
+					'<p>
+						<label for="'.$idFrais.'">'.$libelle.'</label>
+						<input type="text" id="'.$idFrais.'" name="lesFrais['.$idFrais.']" size="10" maxlength="5" value="'.$quantite.'" />
+					</p>
+					';
+				}
+			?>
+			
+			
+			<legend>Total</legend>
 			<?php
 				foreach ($lesFraisForfait as $unFrais)
 				{

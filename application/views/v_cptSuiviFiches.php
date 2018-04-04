@@ -2,7 +2,7 @@
 	$this->load->helper('url');
 ?>
 <div id="contenu">
-	<h2>Validation des fiches de frais</h2>
+	<h2>Suivi du paiement des fiches de frais</h2>
 	 	
 	<?php if(!empty($notify)) echo '<p id="notify" >'.$notify.'</p>';?>
 	 
@@ -20,21 +20,25 @@
 	<tbody>
           
 		<?php    
-			foreach( $listeFiches as $uneFiche) 
+			foreach( $suiviFiches as $uneFiche) 
 			{
 				$modLink= '';
-				$ValiderLink= '';
-				$RefuserLink= '';
+				$MisePaiementLink= '';
+				$RembourserLink= '';
 
-				if ($uneFiche['id'] == 'CL') {
+				if ($uneFiche['id'] == 'VA') {
 					$modLink = anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], 'voir',  'title="Voir la fiche"');
-					$ValiderLink= anchor('c_comptable/ValiderFiche/'.$uneFiche['idVisiteur'].'/'.$uneFiche['mois'], 'Valider',  'title="Valider la fiche"  onclick="return confirm(\'Voulez-vous vraiment valider cette fiche ?\');"');
-					$RefuserLink= anchor('c_comptable/RefuserFiche/'.$uneFiche['idVisiteur'].'/'.$uneFiche['mois'], 'Refuser',  'title="Refuser la fiche"  onclick="return confirm(\'Voulez-vous vraiment refuser cette fiche ?\');"');
+					$MisePaiementLink= anchor('c_comptable/MisePaiementFiche/'.$uneFiche['idVisiteur'].'/'.$uneFiche['mois'], 'Paiement',  'title="Mise en paiement de la fiche"  onclick="return confirm(\'Voulez-vous vraiment mettre en paiement la fiche ?\');"');
 				}
+				
+				else if ($uneFiche['id'] == 'MP') {
+					$modLink = anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], 'voir',  'title="Voir la fiche"');
+					$RembourserLink= anchor('c_comptable/RembourserFiche/'.$uneFiche['idVisiteur'].'/'.$uneFiche['mois'], 'Remboursement',  'title="Remboursement de la fiche"  onclick="return confirm(\'Voulez-vous vraiment rembourser cette fiche ?\');"');	
+				}
+				
 				else {
 					$modLink = anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], 'voir',  'title="Voir la fiche"');
 				}
-				
 				
 				echo
 				'<tr>
@@ -44,8 +48,8 @@
 					<td class="montant">'.$uneFiche['montantValide'].'</td>
 					<td class="date">'.$uneFiche['dateModif'].'</td>
 					<td class="action">'.$modLink.'</td>
-                    <td class="action">'.$ValiderLink.'</td>
-					<td class="action">'.$RefuserLink.'</td>                    
+                    <td class="action">'.$MisePaiementLink.'</td>
+					<td class="action">'.$RembourserLink.'</td>                    
                 </tr>';
 			}
 		?>	  

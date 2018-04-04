@@ -46,13 +46,27 @@ class A_comptable extends CI_Model {
 	*/
 	public function listeFiches ($message=null)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
-
-
 		$data['notify'] = $message;
 		$data['listeFiches'] = $this->dataAccess->getFiches();		
 		$this->templates->load('t_comptable', 'v_cptMesFiches', $data);	
 	}
+	
 
+	/**
+	 * Suivi des fiches validées afin de pouvoir les mettre en paiement
+	 * puis de les remboursées
+	 *
+	 * @param $idVisiteur : l'id du visiteur
+	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
+	 */
+	public function suiviFiches ($message=null)
+	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
+		$data['notify'] = $message;
+		$data['suiviFiches'] = $this->dataAccess->getsuiviFiches();
+		$this->templates->load('t_comptable', 'v_cptSuiviFiches', $data);
+	}
+	
+	
 	/**
 	 * Présente le détail de la fiche sélectionnée 
 	 * 
@@ -62,7 +76,7 @@ class A_comptable extends CI_Model {
 	
 	public function voirFiche($idVisiteur, $mois)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
-
+		
 		$data['numAnnee'] = substr( $mois,0,4);
 		$data['numMois'] = substr( $mois,4,2);
 		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idVisiteur,$mois);
@@ -70,12 +84,13 @@ class A_comptable extends CI_Model {
 
 		$this->templates->load('t_comptable', 'v_visVoirListeFrais', $data);
 	}
+	
 
 	/**
 	 * Présente le détail de la fiche sélectionnée et donne 
 	 * accés à la modification du contenu de cette fiche.
 	 * 
-	 * @param $idVisiteur : l'id du visiteur 
+	 * @param $idComptable : l'id du comptable
 	 * @param $mois : le mois de la fiche à modifier 
 	 * @param $message : message facultatif destiné à notifier l'visiteur du résultat d'une action précédemment exécutée
 	*/
@@ -85,19 +100,52 @@ class A_comptable extends CI_Model {
 		$this->dataAccess->ValiderFiche($idComptable, $mois);
 	}*/
 	
-	public function ValiderFiche($idComptable, $mois, $message = NULL)
+	public function ValiderFiche($idVisiteur, $mois, $message = NULL)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		
 		$data['notify']= $message;
-		$data['ValiderFiche'] = $this->dataAccess->getFiches();
+		//$data['ValiderFiche'] = $this->dataAccess->getLesInfosFicheFrais($idVisiteur,$mois);
+		$this->dataAccess->ValiderFiche($idVisiteur, $mois);
+		$data['listeFiches'] = $this->dataAccess->getFiches();
 		$this->templates->load('t_comptable', 'v_cptMesFiches', $data);
 	}
 
+	public function RefuserFiche($idVisiteur, $mois, $message = NULL)
+	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
+		
+		$data['notify']= $message;
+		//$data['RefuserFiche'] = $this->dataAccess->getLesInfosFicheFrais($idVisiteur,$mois);
+		$this->dataAccess->RefuserFiche($idVisiteur, $mois);
+		$data['listeFiches'] = $this->dataAccess->getFiches();
+		$this->templates->load('t_comptable', 'v_cptMesFiches', $data);
+	}
+	
+	
+	public function MisePaiementFiche($idVisiteur, $mois, $message = NULL)
+	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
+		
+		$data['notify']= $message;
+		//$data['ValiderFiche'] = $this->dataAccess->getLesInfosFicheFrais($idVisiteur,$mois);
+		$this->dataAccess->MisePaiementFiche($idVisiteur, $mois);
+		$data['suiviFiches'] = $this->dataAccess->getsuiviFiches();
+		$this->templates->load('t_comptable', 'v_cptSuiviFiches', $data);
+	}
+	
+	public function RembourserFiche($idVisiteur, $mois, $message = NULL)
+	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
+		
+		$data['notify']= $message;
+		//$data['RefuserFiche'] = $this->dataAccess->getLesInfosFicheFrais($idVisiteur,$mois);
+		$this->dataAccess->RembourserFiche($idVisiteur, $mois);
+		$data['suiviFiches'] = $this->dataAccess->getsuiviFiches();
+		$this->templates->load('t_comptable', 'v_cptSuiviFiches', $data);
+	}
+	
 
 	/**
 	 * Modifie les quantités associées aux frais forfaitisés dans une fiche donnée
 	 * 
-	 * @param $idVisiteur : l'id du visiteur 
+	 * @param $idComptable : l'id du comptable 
 	 * @param $mois : le mois de la fiche concernée
 	 * @param $lesFrais : les quantités liées à chaque type de frais, sous la forme d'un tableau
 	*/

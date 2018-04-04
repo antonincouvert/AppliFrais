@@ -88,6 +88,8 @@ class DataAccess extends CI_Model {
 		$lesLignes = $rs->result_array();
 		return $lesLignes; 
 	}
+	
+
 		
 	/**
 	 * Retourne tous les FraisForfait
@@ -196,7 +198,7 @@ class DataAccess extends CI_Model {
 	}
 	
 	/**
-	 * Valide une fiche de frais en modifiant son état de "CR" à "CL"
+	 * Valide une fiche de frais en modifiant son état de "CR" à "Va"
 	 * Ne fait rien si l'état initial n'est pas "CR"
 	 *
 	 * @param $idVisiteur
@@ -211,7 +213,7 @@ class DataAccess extends CI_Model {
 	}
 	
 	/**
-	 * Valide une fiche de frais en modifiant son état de "CR" à "CL"
+	 * Refuse une fiche de frais en modifiant son état de "CR" à "R"
 	 * Ne fait rien si l'état initial n'est pas "CR"
 	 *
 	 * @param $idVisiteur
@@ -222,6 +224,37 @@ class DataAccess extends CI_Model {
 		$laFiche = $this->getLesInfosFicheFrais($idComptable,$mois);
 		if($laFiche['idEtat']=='CL'){
 			$this->majEtatFicheFrais($idComptable, $mois,'RF');
+		}
+	}
+	
+	
+	
+	
+	/**
+	 * Mise en paiment d'une fiche de frais en modifiant son état de "VA" à "MP"
+	 *
+	 * @param $idVisiteur
+	 * @param $mois sous la forme aaaamm
+	 */
+	public function MisePaiementFiche($idComptable,$mois){
+		//met à 'CL' son champs idEtat
+		$laFiche = $this->getLesInfosFicheFrais($idComptable,$mois);
+		if($laFiche['idEtat']=='VA'){
+			$this->majEtatFicheFrais($idComptable, $mois,'MP');
+		}
+	}
+	
+	/**
+	 * Rembourser une fiche de frais en modifiant son état de "MP" à "RB"
+	 *
+	 * @param $idVisiteur
+	 * @param $mois sous la forme aaaamm
+	 */
+	public function RembourserFiche($idComptable,$mois){
+		//met à 'CL' son champs idEtat
+		$laFiche = $this->getLesInfosFicheFrais($idComptable,$mois);
+		if($laFiche['idEtat']=='MP'){
+			$this->majEtatFicheFrais($idComptable, $mois,'RB');
 		}
 	}
 	
@@ -334,12 +367,26 @@ class DataAccess extends CI_Model {
 		$req = "select nom, idVisiteur, E.id, mois, montantValide, dateModif, 
 		libelle from fichefrais F, utilisateur U, Etat E where F.idVisiteur = U.id 
 		and F.idEtat = E.id
-    	and F.idEtat ='CL'
 		order by mois desc";
 		$rs = $this->db->query($req);
 		$lesFiches = $rs->result_array();
 		return $lesFiches;
 	}
+	
+	
+	
+	public function getsuiviFiches () {
+		$req = "select nom, idVisiteur, E.id, mois, montantValide, dateModif, libelle 
+		from fichefrais F, utilisateur U, Etat E 
+		where F.idVisiteur = U.id and F.idEtat = E.id 
+		and (E.id like 'MP' or E. id = 'VA' or E.id ='RB') order by mois desc";
+		$rs = $this->db->query($req);
+		$lesFiches = $rs->result_array();
+		return $lesFiches;
+	}
+	
+	
+	
 	
 	/**
 	 * Calcule le montant total de la fiche pour un visiteur et un mois donnés
