@@ -82,7 +82,7 @@ class A_comptable extends CI_Model {
 		$data['lesFraisHorsForfait'] = $this->dataAccess->getLesLignesHorsForfait($idVisiteur,$mois);
 		$data['lesFraisForfait'] = $this->dataAccess->getLesLignesForfait($idVisiteur,$mois);		
 
-		$this->templates->load('t_comptable', 'v_visVoirListeFrais', $data);
+		$this->templates->load('t_comptable', 'v_cptVoirListeFrais', $data);
 	}
 	
 
@@ -99,7 +99,14 @@ class A_comptable extends CI_Model {
 		
 		$this->dataAccess->ValiderFiche($idComptable, $mois);
 	}*/
-	
+	 /**
+	  * Permet de valider pour le comptable de valider 
+	  * une fiche de frais du visiteur
+	  * 
+	  * @param $idVisiteur
+	  * @param $mois
+	  * @param $message
+	  */
 	public function ValiderFiche($idVisiteur, $mois, $message = NULL)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		

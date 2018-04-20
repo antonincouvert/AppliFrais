@@ -28,6 +28,7 @@ class DataAccess extends CI_Model {
 		return $ligne;
 	}
 
+	
 	/**
 	 * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
 	 * concernées par les deux arguments
@@ -79,7 +80,7 @@ class DataAccess extends CI_Model {
 	 * @return l'id, le libelle et la quantité sous la forme d'un tableau associatif 
 	*/
 	public function getLesLignesForfait($idVisiteur, $mois){
-		$req = "select fraisforfait.id as idfrais, fraisforfait.libelle as libelle, lignefraisforfait.quantite as quantite 
+		$req = "select fraisforfait.id as idfrais, fraisforfait.libelle as libelle, lignefraisforfait.quantite as quantite, lignefraisforfait.montantApplique as montant  
 				from lignefraisforfait inner join fraisforfait 
 					on fraisforfait.id = lignefraisforfait.idfraisforfait
 				where lignefraisforfait.idvisiteur ='$idVisiteur' and lignefraisforfait.mois='$mois' 
@@ -229,11 +230,10 @@ class DataAccess extends CI_Model {
 	
 	
 	
-	
 	/**
 	 * Mise en paiment d'une fiche de frais en modifiant son état de "VA" à "MP"
 	 *
-	 * @param $idVisiteur
+	 * @param $idComptable
 	 * @param $mois sous la forme aaaamm
 	 */
 	public function MisePaiementFiche($idComptable,$mois){
@@ -247,7 +247,7 @@ class DataAccess extends CI_Model {
 	/**
 	 * Rembourser une fiche de frais en modifiant son état de "MP" à "RB"
 	 *
-	 * @param $idVisiteur
+	 * @param $idComptable
 	 * @param $mois sous la forme aaaamm
 	 */
 	public function RembourserFiche($idComptable,$mois){
@@ -364,10 +364,12 @@ class DataAccess extends CI_Model {
 	}
 	
 	public function getFiches () {
-		$req = "select nom, idVisiteur, E.id, mois, montantValide, dateModif, 
-		libelle from fichefrais F, utilisateur U, Etat E where F.idVisiteur = U.id 
-		and F.idEtat = E.id
-		order by mois desc";
+		$req = "select nom, idVisiteur, E.id, mois, montantValide, dateModif, libelle 
+				from fichefrais F, utilisateur U, Etat E 
+				where F.idVisiteur = U.id 
+				and F.idEtat = E.id 
+				and E.id = 'CL' 
+				order by mois desc";
 		$rs = $this->db->query($req);
 		$lesFiches = $rs->result_array();
 		return $lesFiches;
