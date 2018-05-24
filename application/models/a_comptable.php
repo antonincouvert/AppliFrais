@@ -120,11 +120,25 @@ class A_comptable extends CI_Model {
 	public function RefuserFiche($idVisiteur, $mois, $message = NULL)
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session
 		
-		$data['notify']= $message;
+		$data['util'] = $idVisiteur;
+		$data['numAnnee'] = substr( $mois,0,4);
+		$data['numMois'] = substr( $mois,4,2);
+		$data['mois'] = $mois;
+		
+		/*$data['notify']= $message;
 		//$data['RefuserFiche'] = $this->dataAccess->getLesInfosFicheFrais($idVisiteur,$mois);
 		$this->dataAccess->RefuserFiche($idVisiteur, $mois);
-		$data['listeFiches'] = $this->dataAccess->getFiches();
-		$this->templates->load('t_comptable', 'v_cptMesFiches', $data);
+		$data['listeFiches'] = $this->dataAccess->getFiches();*/
+		$this->templates->load('t_comptable', 'v_cptCommenterUnRefus', $data);
+	}
+	
+	
+	public function RefusFiche($idutilisateur, $mois,$raison)
+	{	// TODO : s'assurer que les paramètres reçus sont coh�rents avec ceux m�moris�s en session
+		// TODO : int�grer une fonctionnalit� d'impression PDF de la fiche
+		
+		$this->dataAccess->RefusFiche($idutilisateur, $mois,$raison);
+		//$this->templates->load('t_comptable', 'v_cptMesFiches', $data);	
 	}
 	
 	
@@ -193,5 +207,28 @@ class A_comptable extends CI_Model {
 	{	// TODO : s'assurer que les paramètres reçus sont cohérents avec ceux mémorisés en session et cohérents entre eux
 
 	    $this->dataAccess->supprimerLigneHorsForfait($idLigneFrais);
+	}
+	
+	
+	/**
+	 * Pour modifier les montants
+	 * 
+	 * @param $idVisiteur
+	 * @param $mois
+	 * @return
+	 */
+	public function getLesLignesHorsForfait($idVisiteur,$mois)
+	{
+		return $this->dataAccess->getLesLignesHorsForfait($idVisiteur,$mois);
+	}
+	
+	public function getLesLignesForfait($idVisiteur,$mois)
+	{
+		return $this->dataAccess->getLesLignesForfait($idVisiteur,$mois);
+	}
+	
+	public function modifMontantFrais($mois, $idVisiteur, $nouveauMontantFrais, $idFrais)
+	{
+		$this->dataAccess->modifMontantFrais($mois, $idVisiteur, $nouveauMontantFrais, $idFrais);
 	}
 }

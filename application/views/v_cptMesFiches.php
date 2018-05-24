@@ -27,7 +27,7 @@
 				$RefuserLink= '';
 
 				if ($uneFiche['id'] == 'CL') {
-					$modLink = anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], 'voir',  'title="Voir la fiche"');
+					$modLink = anchor('c_comptable/modMontantFrais/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], 'voir',  'title="Voir la fiche"');
 					$ValiderLink= anchor('c_comptable/ValiderFiche/'.$uneFiche['idVisiteur'].'/'.$uneFiche['mois'], 'Valider',  'title="Valider la fiche"  onclick="return confirm(\'Voulez-vous vraiment valider cette fiche ?\');"');
 					$RefuserLink= anchor('c_comptable/RefuserFiche/'.$uneFiche['idVisiteur'].'/'.$uneFiche['mois'], 'Refuser',  'title="Refuser la fiche"  onclick="return confirm(\'Voulez-vous vraiment refuser cette fiche ?\');"');
 				}
@@ -39,7 +39,7 @@
 				echo
 				'<tr>
 					<td class="libelle">'.$uneFiche['nom'].'</td>
-					<td class="date">'.anchor('c_comptable/voirFiche/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], $uneFiche['mois'], 'title="Consulter la fiche"').'</td>
+					<td class="date">'.anchor('c_comptable/modMontantFrais/'.$uneFiche['mois'].'/'.$uneFiche['idVisiteur'], $uneFiche['mois'], 'title="Consulter la fiche"').'</td>
 					<td class="libelle">'.$uneFiche['libelle'].'</td>
 					<td class="montant">'.$uneFiche['montantValide'].'</td>
 					<td class="date">'.$uneFiche['dateModif'].'</td>

@@ -85,6 +85,7 @@ class C_comptable extends CI_Controller {
 				// obtention de l'id visiteur courant
 				
 				$this->a_comptable->voirFiche($idVisiteur, $mois);
+				
 			}
 			elseif ($action == 'modFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
 			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
@@ -135,6 +136,8 @@ class C_comptable extends CI_Controller {
 				$idComptable = $this->session->userdata('idUser');
 				
 				$this->a_comptable->ValiderFiche($idVisiteur, $mois);
+				
+				$this->a_comptable->listeFiches("La fiche $idVisiteur du $mois est validée.");
 			}
 			elseif ($action == 'RefuserFiche')		// modFiche demandé : on active la fonction modFiche du modèle authentif
 			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)
@@ -152,6 +155,60 @@ class C_comptable extends CI_Controller {
 				$idComptable = $this->session->userdata('idUser');
 				
 				$this->a_comptable->RefuserFiche($idVisiteur, $mois);
+			}
+			elseif ($action == 'RefusFiche') 	// signeFiche demandé : on active la fonction signeFiche du modÃ¨le visiteur ...
+			{	// TODO : contrÃ´ler la validité du second paramÃ¨tre (mois de la fiche Ã  modifier)
+				$this->load->model('a_comptable');
+				
+				// obtention du mois de la fiche Ã  signer qui doit avoir été transmis
+				// en second paramÃ¨tre
+				$mois = $params[0];
+				// obtention de l'id utilisateur courant et du mois concerné
+				$idVisiteur = $params[1];
+				$raison = $this->input->post('raison');
+				$this->a_comptable->RefusFiche($idVisiteur, $mois, $raison);
+				
+				// ... et on revient Ã  mesFiches
+				$this->a_comptable->listeFiches("La fiche $idVisiteur du $mois est refusée car $raison .");
+			}
+			else if ($action == 'modifMontantFrais') //action modifMontantFrais demandé : on modifie le montant du frais
+			{
+				$this->load->model('a_comptable');
+				
+				$mois = $params[0];
+				$idVisiteur = $params[1];
+				$idFrais = $params[2];
+				
+				$nouveauMontantFrais = $_POST[$idFrais];
+				$this->a_comptable->modifMontantFrais($mois, $idVisiteur, $nouveauMontantFrais, $idFrais);
+				
+				$data['notify'] = "Le montant du frais a bien été modifié";
+				$data['mois'] = $mois;
+				$data['idVisiteur'] = $params[1];
+				$data['numAnnee'] = substr( $mois,0,4);
+				$data['numMois'] = substr( $mois,4,2);
+				$data['lesFraisHorsForfait'] = $this->a_comptable->getLesLignesHorsForfait($idVisiteur,$mois);
+				$data['lesFraisForfait'] = $this->a_comptable->getLesLignesForfait($idVisiteur,$mois);
+				
+				$this->templates->load('t_comptable', 'v_cptModMontant', $data);
+				
+			}
+			else if ($action == 'modMontantFrais') //action modifMontantFrais demandé : on modifie le montant du frais
+			{
+				$this->load->model('a_comptable');
+				
+				$mois = $params[0];
+				$idVisiteur = $params[1];
+
+				$data['mois'] = $mois;
+				$data['idVisiteur'] = $params[1];
+				$data['numAnnee'] = substr( $mois,0,4);
+				$data['numMois'] = substr( $mois,4,2);
+				$data['lesFraisHorsForfait'] = $this->a_comptable->getLesLignesHorsForfait($idVisiteur,$mois);
+				$data['lesFraisForfait'] = $this->a_comptable->getLesLignesForfait($idVisiteur,$mois);
+				
+				$this->templates->load('t_comptable', 'v_cptModMontant', $data);
+				
 			}
 			elseif ($action == 'suiviFiches')		// modFiche demandé : on active la fonction modFiche du modèle authentif
 			{	// TODO : contrôler la validité du second paramètre (mois de la fiche à modifier)

@@ -3,7 +3,7 @@ $this->load->helper('url');
 ?>
 
 <div id="contenu">
-	<h2>Consulter une fiche de frais du mois <?php echo $numMois."-".$numAnnee; ?></h2>
+	<h2>Modifier une fiche de frais du mois <?php echo $numMois."-".$numAnnee; ?></h2>
 					
 	<div class="corpsForm">
 	  
@@ -26,17 +26,18 @@ $this->load->helper('url');
 						
 						
 						echo '<tr>
+									
 									<td><label for="' . $idFrais . '">' . $libelle . '</label></td>
 									<td><type="text" id="' . $idFrais . '" name="lesFrais[' . $idFrais . ']" class="input" size="10" maxlength="5" value="' . $quantite . '" />' . $quantite .'</td>
-									<td id="montant'.$idFrais.'">'.$montant.'</td>
+									<td><input type="text" id="'.$idFrais.'" name="lesFrais['.$montant.']" size="10" maxlength="5" value="'.$montant.'" />
 									<td id="total'.$idFrais.'">'.$total.'</td>
-									
+
 							</tr>
 							';
 					}
 					
 					echo '<tr> 
-								<td></td><td></td><td>Total frais forfitisés</td><td id="totalfrais'.$idFrais.'">'.$totalfrais.'</td>
+								<td></td><td></td><td>Total frais forfaitisés</td><td id="totalfrais'.$idFrais.'">'.$totalfrais.'</td>
 						 </tr>'
 					
 				?>

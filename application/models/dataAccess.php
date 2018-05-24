@@ -220,11 +220,12 @@ class DataAccess extends CI_Model {
 	 * @param $idVisiteur
 	 * @param $mois sous la forme aaaamm
 	 */
-	public function RefuserFiche($idComptable,$mois){
+	public function RefusFiche($idComptable,$mois,$raison){
 		//met à 'CL' son champs idEtat
 		$laFiche = $this->getLesInfosFicheFrais($idComptable,$mois);
 		if($laFiche['idEtat']=='CL'){
 			$this->majEtatFicheFrais($idComptable, $mois,'RF');
+			$this->majRaison($idComptable, $mois,$raison);
 		}
 	}
 	
@@ -348,6 +349,14 @@ class DataAccess extends CI_Model {
 		$this->db->simple_query($req);
 	}
 	
+	
+	public function majRaison($idVisiteur,$mois,$raison){
+		$req = "update ficheFrais
+		set raison ='$raison', dateModif = now()
+		where fichefrais.idVisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
+		$this->db->simple_query($req);
+	}
+	
 	/**
 	 * Obtient toutes les fiches (sans détail) d'un visiteur donné 
 	 * 
@@ -433,5 +442,22 @@ class DataAccess extends CI_Model {
 				where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		$this->db->simple_query($req);
 	}
+	
+	
+	/**
+	 * Mofifie le montant d'un frais sur une fiche
+	 *
+	 * @param $mois : le mois de la fiche
+	 * @param $idVisiteur : l'id du visiteur à qui appartient la fiche
+	 * @param $nouveauMontantFrais : le nouveau montant du frais
+	 * @param $idFrais : l'id du frais
+	 */
+	public function modifMontantFrais($mois, $idVisiteur, $nouveauMontantFrais, $idFrais)
+	{
+		$req = "UPDATE lignefraisforfait SET montantApplique = '".$nouveauMontantFrais."' WHERE idVisiteur = '".$idVisiteur."' AND mois = '".$mois."' AND idFraisForfait = '".$idFrais."';";
+		
+		$this->db->simple_query($req);
+	}
+	
 }
 ?>
